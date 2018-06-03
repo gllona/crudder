@@ -1,0 +1,2035 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Crudder</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Crudder</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder controller class</p>
+<p class="description"><p>This file should reside into the &quot;application/controllers&quot; directory</p><p>A class for implementing a CRUD software components with a high degree of customization</p><p>Based on and intented to work upon the CodeIgniter PHP framework</p><p>Acts both as a model and a self-contained controller for Crudder</p><p>Configuration for this class should be made in the core/Crudderconfig class</p><p>Limitations:</p><p>1. can't use the 'callback_*' CI validation methods (within Crudder); use instead 'crudder_*' validation methods (more powerful) and implement them in the Crudderconfig class<p>  2. the special string value &quot;(NULL)&quot; in forms indicates the NULL database value (for fields that can be NULL), so this particular string can't be used as a normal value for text fields; this string is customizable in the Cruderconfig class</p><p>3. all tables managed by the Crudder must have an 'id' field of type INT (or its numeric derivatives), that will work as primary key and can not have the &quot;-1&quot; value assigned; the table can also have any other field with the UNIQUE or INDEX SQL indexes types; if this is the case, this feature should be reflected as a validation rule in the crudder_fields metatable (as crudder_is_unique for example)</p><p>4. can manage 1:N relations, but the Crudder will show it in the table that have the &quot;N&quot; part; in order to this to work, the database should implement the relation with the foreign key spirit (defined or not in this way in the database)</p><p>5. can not manage N:N relations unless these relations are implement as a normal table; in this case the relation values (pairs in that table) will have to be managed as any other SQL table</p><p>6. can not show SELECT MULTIPLE boxes in HTML views</p><p>7. HTML forms must not use fields (hidden or not) whose names begin with &quot;crudder_&quot;; these names are reserver for the Crudder implementation</p><p>8. form DATETIME inputs don't show intelligent controls for setting and modifying (currently Bootstrap doesn't provide them)</p><p>9. names for CI session variables can not begin with the string &quot;crudder_&quot;</p><p>10. the .htaccess should be used for hiding the &quot;index.php&quot; strings in the URI's; a sample is provided with this distribution (remember that names beginning with a dot will not be shown when doing a &quot;ls&quot;; use instead &quot;ls -a&quot;); be sure to blank $config['index_page'] in application/config/config.php and enable mod_rewrite in Apache2; for a local installation add an entry in /etc/hosts pointing to localhost (127.0.0.1) and create the proper virtual host in the web server (a sample of a virtual host configuration files is included here under the &quot;_distrib&quot; directory)</p><p>11. this file should reside into the &quot;application/controllers&quot; directory</p><p>12. Crudder is currently tested only with PHP 5.5.1-2 on Linux Mint Debian Edition and MySQL 14.14 Distrib 5.5.31</p><p>13. Crudder documentation is currently only available in english</p><p>Configuration:</p><p>1. be sure that the CI &quot;application/config/database.php&quot; file includes the correct information for database access, like:<p><ul><li>$db['default']['hostname'] = 'localhost';</li><li>$db['default']['username'] = 'crudder_user';</li><li>$db['default']['password'] = 'crudder_password';</li><li>$db['default']['database'] = 'crudder';</li><li>these values should be changed to the needed value of your application</li></ul>  2. make a symbolic link from &quot;application/views/{pages_set}/templates/{header.php|footer.php}&quot; to the corresponding files in the main application, if you want the Crudder to use the main application header an footer, instead of the Crudder-defined header and footer; note that the Crudder have also a crudder_header and crudder_footer that are are intended to work only by the Crudder</p><p>3. XSS is enabled by default for validation of input fields of forms; can be enabled as a global CI directive with the following setting in &quot;application/config/config.php&quot; file (this can also be set field-by-field through Crudder metatables): <ul><li>$config['global_xss_filtering'] = TRUE;</li></ul>  4. CodeIgniter needed modifications for &quot;application/config/autoload.php&quot; file: <ul><li>$autoload['libraries'] = array('database', 'session', 'form_validation');</li><li>$autoload['helper']    = array('url', 'html', 'form', 'language');</li></ul>  5. must set the proper values in &quot;application/config/routes.php&quot; like this: <ul><li>$route['default_controller'] = &quot;mainapp&quot;; // (for the integrated sample to work (includes users administration))</li><li>$route['default_controller'] = &quot;crudder&quot;; // (in order to work with an isolated, no integrated Crudder work mode (for testing and simple applications))</li></ul>  6. in the case that you need another language localization, a copy of the &quot;application/languages/english&quot; directory can be used; just change the name of the directory to the proper value; this should be done in order to the Crudder to work with localization; for spanish, a &quot;spanish/form_validation_lang.php&quot; is included with this distribution (only this file is needed by the Crudder)</p><p>7. if you want to reset the sample database included with this distribution, look for the proper SQL scripts under the &quot;_database&quot; directory</p><p>8. this distribution includes a complete CodeIgniter installation in order to work out-of-the-box; however, the php files that compose the Crudder (excluding the sample Mainapp application) are (inside the &quot;application/&quot; directory): controllers/crudder.php, core/Crudderconfig.php, views/bootstrapped/*, views/raw/*, languages/spanish/form_validation_lang.php (the rest of files inside languages/spanish are a copy of the languages/english directory)</p><p>9. If you plan use Crudder with an external, no CI-based application, look inside the Crudderconfig class for the proper configuration</p><p>As standalone:</p><p>1. this Crudder distribution is set, by default, as a non-standalone mode; this permits you to see easily the integration between you main application and the Crudder; if you want to set the Crudder in standalone mode, follow these steps:<p> <ul><li>in CrudderConfig.php: set the constant STANDALONE to TRUE</li></ul> <ul><li>in CrudderConfig.php: set the constant GOAWAY_METHOD to 'crudder/abort'</li></ul> <ul><li>in Crudderconfig.php: set the constant ABORT_METHOD to 'crudder/abort'</li></ul> <ul><li>in CrudderConfig.php: set the constant DEFAULT_USER_ROLE to 'superadmin' or 'admin'; remember that the role 'admin' can not edit the Crudder metatables</li></ul> <ul><li>in applications/config/routes.php: set the constant $route['default_controller'] to &quot;crudder&quot;</li></ul>  These are all the notes for limitations and configuration; for a complete list of features see the README file or the web page of this library</p><p>Comments about bugs, requested feautures or general messages are welcome; just use my email address indicated below</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Gorka G LLona &lt;<a href="mailto:gorka@desarrolladores.logicos.org">gorka@desarrolladores.logicos.org</a>&gt; &lt;gllona@gmail.com&gt;</li>
+				<li><span class="field">version:</span> Version 1.0.0 beta 1</li>
+				<li><span class="field">copyright:</span> Copyright (c) 2014, Gorka G LLona</li>
+				<li><span class="field">link:</span> <a href="http://librerias.logicas.org/crudder">http://librerias.logicas.org/crudder</a></li>
+				<li><span class="field">since:</span> Version 1.0.0 beta 1</li>
+				<li><span class="field">license:</span> GNU</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_crudder.php.html">/crudder.php</a> (line <span class="field">106</span>)
+		</p>
+		
+				
+		<pre>CI_Controller
+   |
+   --Crudder</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																								<div class="var-title">
+					<span class="var-type">object contains</span>
+					<a href="#$configurator" title="details" class="var-name">$configurator</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$validation_errors" title="details" class="var-name">$validation_errors</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$validation_error_delimiters" title="details" class="var-name">$validation_error_delimiters</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																																																																																												<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#init" title="details" class="method-name">init</a>
+										()
+									</div>
+																																																																																																																																																																
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#abort" title="details" class="method-name">abort</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#array_to_map" title="details" class="method-name">array_to_map</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$base_array</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$field_for_index</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$single_field_for_entry</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_default_sort_specs" title="details" class="method-name">build_default_sort_specs</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#build_dropdown_html" title="details" class="method-name">build_dropdown_html</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$map</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$select_name</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$select_attribs</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$option_attribs</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$default_idkey</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$can_be_null</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">arra</span>
+										<a href="#build_editable_html_snippet" title="details" class="method-name">build_editable_html_snippet</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$record</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$field_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$read_only_and_hidden_non_editable</span> = <span class="var-default">true</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id_first_table</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_empty_filters" title="details" class="method-name">build_empty_filters</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#build_empty_record" title="details" class="method-name">build_empty_record</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_fields_values_maps" title="details" class="method-name">build_fields_values_maps</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$only_for_first_shown_fields</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$record_data</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_field_values_map" title="details" class="method-name">build_field_values_map</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$field_md</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$main_table_record</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#build_filters_sql" title="details" class="method-name">build_filters_sql</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$filters_from_post</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#build_fixed_value_html" title="details" class="method-name">build_fixed_value_html</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$map</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idkey</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_headers" title="details" class="method-name">build_headers</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$with_secondary_fields</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$with_hidden_fields</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_pager_specs" title="details" class="method-name">build_pager_specs</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_page_number</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_action</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_records_htmls" title="details" class="method-name">build_records_htmls</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$sort_field_name</span> = <span class="var-default">false</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$sort_order</span> = <span class="var-default">false</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span> = <span class="var-default">'1=1'</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$pager_data</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$editable</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_record_htmls" title="details" class="method-name">build_record_htmls</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$headers</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$record_data</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#build_static_html_snippet" title="details" class="method-name">build_static_html_snippet</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$record</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$field_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#check_access" title="details" class="method-name">check_access</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$only_superadmin</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$logout_if_fail</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integer</span>
+										<a href="#count_table_records" title="details" class="method-name">count_table_records</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#crudder_is_unique" title="details" class="method-name">crudder_is_unique</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$field_validation_specs</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#crudder_redirect" title="details" class="method-name">crudder_redirect</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$uri</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#crudder_view" title="details" class="method-name">crudder_view</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$page_name</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">array()</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">data()</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#fetch_fields_metadata" title="details" class="method-name">fetch_fields_metadata</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#fetch_tables_metadata" title="details" class="method-name">fetch_tables_metadata</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#fetch_table_metadata" title="details" class="method-name">fetch_table_metadata</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table_name</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#fetch_table_record" title="details" class="method-name">fetch_table_record</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table_name</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#goaway" title="details" class="method-name">goaway</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#index" title="details" class="method-name">index</a>
+										()
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#pre_print_r" title="details" class="method-name">pre_print_r</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$what</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_delete" title="details" class="method-name">record_delete</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_edit" title="details" class="method-name">record_edit</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$record_data</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_edit_insert" title="details" class="method-name">record_edit_insert</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_edit_insert_redirect" title="details" class="method-name">record_edit_insert_redirect</a>
+											(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span> = <span class="var-default">-1</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_edit_insert_secondary" title="details" class="method-name">record_edit_insert_secondary</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_edit_update" title="details" class="method-name">record_edit_update</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_insert" title="details" class="method-name">record_insert</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_insert_secondary" title="details" class="method-name">record_insert_secondary</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#record_update" title="details" class="method-name">record_update</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_message_on_data" title="details" class="method-name">set_message_on_data</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$data</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_message_on_session" title="details" class="method-name">set_message_on_session</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#tables_show" title="details" class="method-name">tables_show</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#table_show" title="details" class="method-name">table_show</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$filters_from_post</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_sort_field_name</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_sort_order</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_pager_page_number</span> = <span class="var-default">false</span>], [<span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_action</span> = <span class="var-default">0</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#table_show_post" title="details" class="method-name">table_show_post</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#validate_record_content" title="details" class="method-name">validate_record_content</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#validation_add_error" title="details" class="method-name">validation_add_error</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$method_name</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_content</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#validation_errors_build_snippet" title="details" class="method-name">validation_errors_build_snippet</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#validation_set_error_delimiters" title="details" class="method-name">validation_set_error_delimiters</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$prev</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$next</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$configurator" id="$configurator"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">object contains</span>
+			<span class="var-name">$configurator</span>
+						(line <span class="line-number">133</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> the Crudderconfig instance; this is set inside the constructor of this class</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$validation_errors" id="$validation_errors"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$validation_errors</span>
+			 = <span class="var-default">array ()</span>			(line <span class="line-number">121</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> accumulative container for validation errors when processing a Crudder form; don't touch</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$validation_error_delimiters" id="$validation_error_delimiters"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$validation_error_delimiters</span>
+			 = <span class="var-default">array ('&lt;p&gt;', '&lt;/p&gt;')</span>			(line <span class="line-number">127</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> wrappers for each validation error as reported to the Bootstrapped Crudder interface; don't touch in order to avoid breaking the look and feel</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodinit" id="init"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method init</span> (line <span class="line-number">143</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Static initializer</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			init
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">156</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodabort" id="abort"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">abort</span> (line <span class="line-number">428</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Exits the Crudder by redirecting to the abort_method</p>
+<p class="description"><p>(method for integration with the main application)</p><p>This case normally occurs when trying to access the Crudder with wrong privileges</p><p>Destroys session userdata and the session itself before displaying the abort view or, if not in standalone mode, before redirecting to the main application abort method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			abort
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodarray_to_map" id="array_to_map"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">array_to_map</span> (line <span class="line-number">267</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates an associative array from a normal, non-keyed array</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			array_to_map
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$base_array</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$field_for_index</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$single_field_for_entry</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$base_array</span><span class="var-description">: base array (non-keyed)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field_for_index</span><span class="var-description">: values of this field will be used as map indexes</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$single_field_for_entry</span><span class="var-description">: if not false, the values of the new map won't be arrays but only this single field; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_default_sort_specs" id="build_default_sort_specs"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_default_sort_specs</span> (line <span class="line-number">995</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds and returns default sort specs</p>
+<p class="description"><p>(CRUD generator method)</p><p>These default values are used when column order specification have not yet been defined in the form that displays the content of a table</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> (each element is a pair: [ field_name = &quot;id&quot;, order_spec = &quot;ASC&quot; ])</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_default_sort_specs
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodbuild_dropdown_html" id="build_dropdown_html"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_dropdown_html</span> (line <span class="line-number">1505</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns a dropdown HTML snippet (SELECT) for an (optional) idkey</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the generated HTML snippet</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			build_dropdown_html
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$map</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$select_name</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$select_attribs</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$option_attribs</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$default_idkey</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$can_be_null</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$map</span><span class="var-description">: map (associative array) base for this field</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$select_name</span><span class="var-description">: SELECT HTML name</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$select_attribs</span><span class="var-description">: SELECT HTML attibutes</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$option_attribs</span><span class="var-description">: OPTION HTML attributes</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$default_idkey</span><span class="var-description">: optional idkey of the field to be used as SELECTED; defaults to none (false)</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$can_be_null</span><span class="var-description">: (optional) if not false, this pair [ idkey, value ] is intended for including an extra value, for example, for NULL field indication, rendered at top of the list; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_editable_html_snippet" id="build_editable_html_snippet"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_editable_html_snippet</span> (line <span class="line-number">1356</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds an editable HTML snippet for the specified field</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an array with a pair containing the HTML snippet and an extra HTML; these values are generated according to the type of the field</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">arra</span>
+		<span class="method-name">
+			build_editable_html_snippet
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$record</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$field_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$read_only_and_hidden_non_editable</span> = <span class="var-default">true</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id_first_table</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$record</span><span class="var-description">: record as extracted from the database</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$field_md</span><span class="var-description">: field metadata (for the field to be rendered)</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$maps</span><span class="var-description">: an array of maps (associative arrays) for all fields with external table info (only one of the map will be used: the one for the field to be rendered)</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$read_only_and_hidden_non_editable</span><span class="var-description">: (experimental) if true, a read-only field will be rendered as a non-editable snippet; those and hidden fields will get extra html for hidden form fields; defaults to true</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$id_first_table</span><span class="var-description">: if false, this form belongs to a secondary table and the field won't have the &quot;+&quot; link (as defined by the view) for calling again a secondary insert form; else (when not false) this must be set to the ID of the initial table whose full record is being edited (in order to go back to the primary insert/update form); defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_empty_filters" id="build_empty_filters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_empty_filters</span> (line <span class="line-number">888</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds and returns a filters specification with empty content</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an associative array where each element is the name of the field (not the ID) and the content is the empty string</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_empty_filters
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: all fields metadata</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_empty_record" id="build_empty_record"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_empty_record</span> (line <span class="line-number">1542</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates an associative array with default values for all fields of a record</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			build_empty_record
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table according to metadata</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_fields_values_maps" id="build_fields_values_maps"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_fields_values_maps</span> (line <span class="line-number">1014</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds maps (as associative arrays) for fields that have external table references (as for dropdown menus) according to fields metadata</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an array with the maps (associative arrays) for all the fields (see the method build_field_values_map for explanation about how is used each map)</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_fields_values_maps
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$only_for_first_shown_fields</span> = <span class="var-default">true</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$record_data</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$id_table</span><span class="var-description">: table ID</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$only_for_first_shown_fields</span><span class="var-description">: if true, get metadata only for fields that should be shown in the table-content form (with show_first as &quot;1&quot;)</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$record_data</span><span class="var-description">: exactly one individual record that will used for filtering all the values of external tables; useful when implementing cascading menus in the form for editing a single record (see the method build_field_values_map for explanation about how to reflect this behaviour in the metatables)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_field_values_map" id="build_field_values_map"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_field_values_map</span> (line <span class="line-number">1056</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds the map for a specific field that have external table info according to fields metadata</p>
+<p class="description"><p>(CRUD generator method)</p><p>A &quot;map&quot; is an associative array; each key (a field of the external table) defines a display name to be shown, normally in a HTML SELECT dropdown menu</p><p>According with the actual values of the records, method uses the value of 'where_filter_for_values' metadata field for filtering the values of the generated map; for example, if this field contains &quot;SUBSTR(`code`, 1, 3) = #code_estado#&quot; (belonging to the another other field &quot;code_municipio&quot;), then the map will only contain the records whose &quot;code&quot; field value matchs the three first characters of the &quot;code_estado&quot; field value</p><p>Note that the maps generated for all the table rows will be the same, unless the main_table_record is passed as an argument</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the generated map</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_field_values_map
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$field_md</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$main_table_record</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: table ID</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$field_md</span><span class="var-description">: field metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$main_table_record</span><span class="var-description">: optional record content as returned by the respective SQL query; the generated map will be filtered by the &quot;where_filter_for_values&quot; metadata value, with a previous substitution of the &quot;#{columnname}#&quot;-like substrings with the proper value of the column &quot;{columnname}&quot; for the field whose map is being generated</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_filters_sql" id="build_filters_sql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_filters_sql</span> (line <span class="line-number">912</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds and returns a SQL snippets for a WHERE clause, containing all the conditions derivated from filters form fields, as returned by the POST request</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			build_filters_sql
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$filters_from_post</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$filters_from_post</span><span class="var-description">: filters data (as they come from POST or build_empty_filters)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_fixed_value_html" id="build_fixed_value_html"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_fixed_value_html</span> (line <span class="line-number">1480</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the map value for an idkey, belonging to the map (associative array) that is being passed as argument</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> HTML snippet (or the empty string if idkey is not found in the map)</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			build_fixed_value_html
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$map</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idkey</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$map</span><span class="var-description">: map for this field (if it has external table info)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idkey</span><span class="var-description">: idkey of the field</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_headers" id="build_headers"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_headers</span> (line <span class="line-number">863</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds the headers info (column names and labels) for a table</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an associative array of fields metadata indexed by ID of the field, each one containing a tuple: [ field name, field display name, help text ]</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_headers
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$with_secondary_fields</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$with_hidden_fields</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$with_secondary_fields</span><span class="var-description">: if true, generates also the headers for secondary fields (those ones that have zero in the &quot;show_first&quot; metadata entry); default to false</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$with_hidden_fields</span><span class="var-description">: if true, generates also the headers for fields that have &quot;1&quot; in the &quot;hidden&quot; metadata entry; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_pager_specs" id="build_pager_specs"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_pager_specs</span> (line <span class="line-number">1141</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds the pager specifications according to the previous HTML form content display (initial and ending row) and the choosen pager action</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> a tuple containing: [ page number, total of pages, starting record, page length, is first page (boolean), is last page (boolean) ]</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_pager_specs
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_page_number</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_action</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$table_md</span><span class="var-description">: table metadata</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$pager_page_number</span><span class="var-description">: current page number</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$pager_action</span><span class="var-description">: page action (-1 | 0 | +1)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filters_sql</span><span class="var-description">: previously generated (by other method) filter for the WHERE SQL clause</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_records_htmls" id="build_records_htmls"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_records_htmls</span> (line <span class="line-number">1180</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds and returns a HTML snippets for all the records that will be shown</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an associative array with row_id as the key and another associative array as the value; this value has the form [ &quot;field_name&quot; -&gt; &quot;generated-html&quot; ]</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_records_htmls
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$sort_field_name</span> = <span class="var-default">false</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$sort_order</span> = <span class="var-default">false</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span> = <span class="var-default">'1=1'</span>], [<span class="var-type">array</span>&nbsp;<span class="var-name">$pager_data</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$editable</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$table_md</span><span class="var-description">: table metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$maps</span><span class="var-description">: maps for all fields with external table info (array of each field map)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$sort_field_name</span><span class="var-description">: sorting field name; defaults to &quot;id&quot; (see build_default_sort_specs method)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$sort_order</span><span class="var-description">: sorting order (ASC | DESC) (see build_default_sort_specs method)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filters_sql</span><span class="var-description">: previously generated (by other method) filter for the WHERE SQL clause</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$pager_data</span><span class="var-description">: pager data as generated by build_pager_specs; must be passed (not optional)</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$editable</span><span class="var-description">: (experimental) if true, make every not-read-only field editable; else (default) as not editable</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_record_htmls" id="build_record_htmls"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_record_htmls</span> (line <span class="line-number">1247</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds an editable HTML snippets for a record</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an associative array whose key is a field name and the value is an array with a pair containing: [ HTML snippet, extra HTML ]; these values are generated according with the type of each field</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_record_htmls
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$headers</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$record_data</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$table_md</span><span class="var-description">: table metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$headers</span><span class="var-description">: headers for columns as generated by build_headers</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$maps</span><span class="var-description">: maps (an array of associative arrays) with values for each field with external table info according to metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$record_data</span><span class="var-description">: record values for each field (a row as returned by a PHP query)</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$secondary_insert</span><span class="var-description">: if true, this is a secondary insert (an insert of a &quot;table_2&quot; record that has the values of a dropdown field of a primary record of &quot;table 1&quot;; with this feature a new record for a dropdown menu can be easily generated without abandoning the first insert/update form); defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbuild_static_html_snippet" id="build_static_html_snippet"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">build_static_html_snippet</span> (line <span class="line-number">1287</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Builds a static (not editable) HTML snippet for the specified field</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an array with a 2-tuple containing the HTML snippet and an extra HTML; these values are generated according with the type of the field</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			build_static_html_snippet
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$record</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$field_md</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">&$maps</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$record</span><span class="var-description">: record as extracted from the database using PHP functions</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$field_md</span><span class="var-description">: field metadata (indicates the field to be rendered)</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$maps</span><span class="var-description">: maps for all fields with external table info (array of maps; each one is an associative array)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcheck_access" id="check_access"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">check_access</span> (line <span class="line-number">347</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Checks access to Crudder based on privileges set in a session variable</p>
+<p class="description"><p>(internal utilities method)</p><p>For example, CI session variable 'role' should contain 'admin' or 'superadmin' (for proper values check the Crudderconfig class)</p><p>When in standalone mode, the session variable will be set from the Crudderconfig DEFAULT_USER_ROLE constant</p><p>Intended only for usage by public methods of this class</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true if access is allowed; false otherwise (in this case the Crudder will be redirected to the &quot;goaway&quot; method, as defined in Crudderconfig)</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			check_access
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$only_superadmin</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$logout_if_fail</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$only_superadmin</span><span class="var-description">: if true, only the &quot;superadmin&quot; role will be allowed to use the Crudder; defaults to false</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$logout_if_fail</span><span class="var-description">: if the authentication fails, the Crudder will enforce a logout from the main system; defaults to true</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcount_table_records" id="count_table_records"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">count_table_records</span> (line <span class="line-number">829</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the number of records for the specified table</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> records count</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integer</span>
+		<span class="method-name">
+			count_table_records
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$table_md</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filters_sql</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$table_md</span><span class="var-description">: table metadata</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filters_sql</span><span class="var-description">: previously generated SQL filter for be applied to the WHERE clause of the count</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcrudder_is_unique" id="crudder_is_unique"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_is_unique</span> (line <span class="line-number">462</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder callback for checking values of HTML forms fields values</p>
+<p class="description"><p>(hardwired method for field value validation)</p><p>This method is intended for use in database inserts and updates (more powerful than CI is_unique)</p><p>Checks if 'value' is already used in 'field_name' of 'table_name'; this for inserts and also for updates that change the value</p><p>If 'action' is 'update' and no 'id_record' is passed, this method can't work properly and will return true (preventing the proper checking of values)</p><p>This method, in particular, is called from the Crudderconfig class (method crudder_is_unique), where all the routines for fields validations should reside; because of the structure and logic of this checking, the method is implemented here</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			crudder_is_unique
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$field_validation_specs</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$field_validation_specs</span><span class="var-description">: field validation specs: [ table_name, field_name, field_with_form_action ] (field_with_form_action is 'insert*' or 'update*', without the &quot;crudder_&quot; prefix); validation rule in the crudder_fields metatable should be, for example: crudder_is_unique[cat_estados,code,insert] (without spaces inside the brackets) for checking that 'value' will be checked against all the values of the field 'code' in the table 'cat_estados' using the logic for a SQL 'insert' operation</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span><span class="var-description">: value to be checked (assigned by the Crudder logic and primarily sent to the 'crudder_*' validations rules in Crudderconfig)</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_record</span><span class="var-description">: ID of the record being checked (assigned by the Crudder logic); if false, the value will be fetched from the database</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcrudder_redirect" id="crudder_redirect"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_redirect</span> (line <span class="line-number">210</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Redirects the browser to the specified URI (CI-style)</p>
+<p class="description"><p>(internal utilities method)</p><p>This method will assign a message intended to be shown in the next view (as a session)</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			crudder_redirect
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$uri</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$uri</span><span class="var-description">: URI (this class' controller method) to redirect to, as used in CI</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$message</span><span class="var-description">: optional string message to be shown in the redirected page, passed to the as a session variable to the next method</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcrudder_view" id="crudder_view"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_view</span> (line <span class="line-number">233</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows the specified view surrounded with headers and footers</p>
+<p class="description"><p>(internal utilities method)</p><p>Allows to show domain-specific header and footer that are located in the 'views/templates' subdirectory; inside them, Crudder-specific header and footer will be shown; inside them, the specified view will be shown</p><p>Crudder actually implements &quot;raw&quot; and &quot;bootstrapped&quot; views (the second one is built using the Twitter Bootstrap GUI framework); files for each type of view reside in a separate subdirectory, allowing to define headers and footers for each case</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			crudder_view
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$page_name</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$data</span> = <span class="var-default">array()</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>], <span class="var-type">array</span>&nbsp;<span class="var-name">data()</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">data()</span><span class="var-description">: variables to be passed to CI view method</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$page_name</span><span class="var-description">: view name (as CI implementation of $this-&gt;load-&gt;view())</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$message</span><span class="var-description">: message to be shown in the view, passed to view into the CI data()</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$data</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfetch_fields_metadata" id="fetch_fields_metadata"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">fetch_fields_metadata</span> (line <span class="line-number">767</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetchs and returns a fields metadata for a table</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the fields metadata: an array of metadata for each field, each one being an array containing the parameters of the fields_metadata as extracted from the database using a SQL query</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			fetch_fields_metadata
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table as set in metadata</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfetch_tables_metadata" id="fetch_tables_metadata"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">fetch_tables_metadata</span> (line <span class="line-number">713</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetchs and returns the metadata for all tables</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the tables metadata: an array of a metadata definition for each table (each one is an array as returned by the respective SQL query); the array is ordered as specified in the crudder_tables table</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			fetch_tables_metadata
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodfetch_table_metadata" id="fetch_table_metadata"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">fetch_table_metadata</span> (line <span class="line-number">738</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetchs and returns a table metadata</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the table metadata</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			fetch_table_metadata
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table_name</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of table as in metadata</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table_name</span><span class="var-description">: optional; if set, use this as selecion criteria instead of id_table</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfetch_table_record" id="fetch_table_record"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">fetch_table_record</span> (line <span class="line-number">801</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Fetchs and returns a record from a table</p>
+<p class="description"><p>(CRUD generator method)</p><p>If there are multiple records with the same ID (a case that should not happen), the method will return only the first one</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> an array with the values of the record, as returned by the respective SQL query</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			fetch_table_record
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table_name</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table_name</span><span class="var-description">: table name</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_record</span><span class="var-description">: ID of the record</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgoaway" id="goaway"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">goaway</span> (line <span class="line-number">407</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Exits from the Crudder</p>
+<p class="description"><p>(method for integration with the main application)</p><p>This function will redirect the system flow to the controller and method defined in the Crudderconfig constant 'GOAWAY_METHOD'</p><p>The referred method will be normally located in another controller (belonging to the main system), except when using the Crudder in standalone mode</p><p>The goaway method can not be &quot;crudder/goaway&quot; in order to avoid recursive calling</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			goaway
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodindex" id="index"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">index</span> (line <span class="line-number">178</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Main method for the Crudder; calls tables_show</p>
+<p class="description"><p>Note that this method will set the error reporting to the most detailed level; this could be disabled (by changing the code) when you are in a production system</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			index
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodpre_print_r" id="pre_print_r"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">pre_print_r</span> (line <span class="line-number">386</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Embeeds a print_r(string) sentence into a pair of HTML &quot;PRE&quot; tags</p>
+<p class="description"><p>(internal utilities method)</p><p>This method is used only when it's neccesary to show texts in views for debugging the Crudder</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			pre_print_r
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$what</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$what</span><span class="var-description">: the string to be echoed with print_r</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_delete" id="record_delete"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_delete</span> (line <span class="line-number">2037</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes a record from the database (hard or soft way)</p>
+<p class="description"><p>(CRUD generator method)</p><p>&quot;Soft way&quot; means that the record will not be deleted but tagged as &quot;deleted&quot; (useful for auditing); in order to indicate this, the &quot;soft_delete_field&quot; in the table &quot;crudder_tables&quot; must countain the name of the field that will be used to save the tag (INT type or one of its derivatives)</p><p>Note that if a field if deleted, it's neccesary that the values of other fields that are UNIQUE-like (either implemented or not using database restrictions) don't collide with new records inserted of updated by system operations that occur after the soft deletion; the way to do this is by defining it in the &quot;soft_delete_uniques_suffix&quot;, that have the following syntax: &quot;{field_name}.{suffix}&quot; where 'field_name' is the field whose values are unique and 'suffix' is a string that will be appended to the current value of the field</p><p>For example: the setting 'code.DEL' will take the current value of field 'code', as in 'Res123', and modify it by 'Res123.DEL'</p><p>More than one field modification can be set by comma-separated rules</p><p>Redirects to the table_show method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_delete
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of table (according to the &quot;crudder_tables&quot; metatable)</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_record</span><span class="var-description">: ID of record</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_edit" id="record_edit"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_edit</span> (line <span class="line-number">1655</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates the form that is used for record insertion or updating</p>
+<p class="description"><p>This method is called from the methods: insert, insert_secondary and record_update</p><p>This method is &quot;reentrant&quot;, in the sense that can also be called preserving the current values of the previous view, in case of validation errors of that</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_edit
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$record_data</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table according to metadata</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$id_record</span><span class="var-description">: ID of the record to be edited; use false (default) for inserting</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$record_data</span><span class="var-description">: array with the previous record values; use for overriding table values when showing again the form after a non-success fields validation; defaults to false</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$secondary_insert</span><span class="var-description">: if true, it is assumed that the operation is an insert of a new record of a secondary table (a sub-operation of the main record edition); for example, for adding a value to a dropdown menu; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_edit_insert" id="record_edit_insert"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_edit_insert</span> (line <span class="line-number">1859</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">POST request processing method for inserting a record in a main or secondary table</p>
+<p class="description"><p>(CRUD generator method)</p><p>This method is not invoked directly from any HTML form, but from others methods of this class</p><p>&quot;Secondary table&quot; here (and in the whole Crudder) means that the operation is called from an edit view of a record belonging to another table, allowing, when in the first view, the rapid population of values that are not currently present in the secondary table</p><p>This method incorporates a special logic for implementing cascading menus; it doesn't use AJAX but the result will almost the same</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_edit_insert
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$secondary_insert</span><span class="var-description">: if true, this form corresponds to a secondary table insert; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_edit_insert_redirect" id="record_edit_insert_redirect"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_edit_insert_redirect</span> (line <span class="line-number">1976</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Process the POST request from a HTML form made for record insertion in a main or secondary table</p>
+<p class="description"><p>(CRUD generator method)</p><p>In order to derivate the POST processing, this method will redirect to the 'table_show' method in case of a primary table, and either to 'record_insert or record_update for secondary tables'</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_edit_insert_redirect
+		</span>
+					(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span> = <span class="var-default">-1</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$secondary_insert</span><span class="var-description">: marks if this form corresponds to a secondary table insert</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$message</span><span class="var-description">: message to be shown in the next page rendering</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table to be shown (only used for coming back to a primary table)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_edit_insert_secondary" id="record_edit_insert_secondary"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_edit_insert_secondary</span> (line <span class="line-number">2005</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">POST target method for record insertion in a secondary table</p>
+<p class="description"><p>(CRUD generator method)</p><p>This is only a wrapper that calls the record_edit_insert method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_edit_insert_secondary
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrecord_edit_update" id="record_edit_update"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_edit_update</span> (line <span class="line-number">1760</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">POST target method for record updating (only in case of a primary table)</p>
+<p class="description"><p>(CRUD generator method)</p><p>This method incorporates a special logic for implementing cascading menus; it doesn't use AJAX but the result will almost the same</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_edit_update
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrecord_insert" id="record_insert"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_insert</span> (line <span class="line-number">1576</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows an empty-values form for inserting a new record in the table</p>
+<p class="description"><p>(CRUD generator method)</p><p>Calls record_edit method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_insert
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$secondary_insert</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table according to metadata</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$old_values</span><span class="var-description">: associative array of metadata idkeys and values used for fields population; useful when the previous submit of the same form has validation errors; defaults to false</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$secondary_insert</span><span class="var-description">: true if this is an insert for a secondary table; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_insert_secondary" id="record_insert_secondary"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_insert_secondary</span> (line <span class="line-number">1603</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows an empty-values form for inserting a new record into a secondary table</p>
+<p class="description"><p>(CRUD generator method)</p><p>This method is called from another insert or update form, and allows the insertion of a new record into a dropdown menu field</p><p>Calls record_insert method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_insert_secondary
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table according to metadata</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$old_values</span><span class="var-description">: optional associativa array of values for fields population; useful when the previous submit has validation errors</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrecord_update" id="record_update"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">record_update</span> (line <span class="line-number">1629</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows an filled-values form for updating an existing record in the table</p>
+<p class="description"><p>(CRUD generator method)</p><p>This is a wrapper for the 'record_edit' method</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			record_update
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$old_values</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_table</span><span class="var-description">: ID of the table according to metadata</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_record</span><span class="var-description">: ID of the record to be fetched the for current values</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$old_values</span><span class="var-description">: associative array of values for fields population; useful when the previous form submit has validation errors; defaults to false</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodset_message_on_data" id="set_message_on_data"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_message_on_data</span> (line <span class="line-number">299</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a message to the data() array for loading a view method using the CI primitives</p>
+<p class="description"><p>(internal utilities method)</p><p>This method is intended only for use by the CI $this-&gt;load-&gt;view() primitive</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_message_on_data
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$data</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$data</span><span class="var-description">: associative array of variables to be passed to the CI $this-&gt;load-&gt;view() method; the associative array will have one more element after this method invocation</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$message</span><span class="var-description">: message to be shown in the view; this is assigned as a CI session variable)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodset_message_on_session" id="set_message_on_session"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_message_on_session</span> (line <span class="line-number">322</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a message to the CI session variables for displaying that message after a redirect</p>
+<p class="description"><p>(internal utilities method)</p><p>This method is intended only for use by the CI redirect() primitive</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_message_on_session
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$message</span><span class="var-description">: message to be shown in the view</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtables_show" id="tables_show"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">tables_show</span> (line <span class="line-number">523</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows a view of all the tables managed by the Crudder with links to the edit form of each one</p>
+<p class="description"><p>(CRUD generator method)</p><p>The metatables are shown or not depending of the Crudderconfig settings</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			tables_show
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodtable_show" id="table_show"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">table_show</span> (line <span class="line-number">571</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows a specific table with paginated records, header for sorting and filterring, and operations links for each record</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			table_show
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$id_table</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$filters_from_post</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_sort_field_name</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_sort_order</span> = <span class="var-default">false</span>], [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$new_pager_page_number</span> = <span class="var-default">false</span>], [<span class="var-type">integer</span>&nbsp;<span class="var-name">$pager_action</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$id_table</span><span class="var-description">: table name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$filters_from_post</span><span class="var-description">: array with column filters as specified in the previous display of the same table; each filter is a string or number that will be considered as part of the value for the field; defaults to false</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$new_sort_field_name</span><span class="var-description">: sort by this field (if triggered by any of the order-by icons); defaults to false</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$new_sort_order</span><span class="var-description">: order for records sorting (ASC | DESC) (if triggered by any of the order-by icons); defaults to false</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$new_pager_page_number</span><span class="var-description">: new page number to be shown (reflected in the pager); defaults to false</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$pager_action</span><span class="var-description">: not used; skip</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtable_show_post" id="table_show_post"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">table_show_post</span> (line <span class="line-number">665</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Shows a specific table (method called from the POST request)</p>
+<p class="description"><p>(CRUD generator method)</p><p>This method calls the 'table_show' method after processing the POST values</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the value returned by table_show method</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			table_show_post
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodvalidate_record_content" id="validate_record_content"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validate_record_content</span> (line <span class="line-number">2125</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Validates content of the submitted POST fields according to fields metadata</p>
+<p class="description"><p>(CRUD generator method)</p><p>The fields metadata for this validation is specified in the field 'validation_rules' of the 'crudder_fields' table; the cascading rules should be specified as CI-style rules</p><p>Can also validate through Crudder-specific rules that are defined like CI callback rules but in the Crudderconfig class; these rules can have zero or more parameters (so they are more powerful than the CI user rules) and must have &quot;crudder_&quot; as prefix of their names</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> true if validation is OK; values of the previous POST fields if a validation error was encountered</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			validate_record_content
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">&$fields_md</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">&$fields_md</span><span class="var-description">: fields metadata</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodvalidation_add_error" id="validation_add_error"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">validation_add_error</span> (line <span class="line-number">2268</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a new error message to the list of errors that should be shown in the next rendered view</p>
+<p class="description"><p>(CRUD generator method)</p><p>This method is invoked only when a Crudderconfig validation callback method ('crudder_*') fails the value checking</p><p>The method is called only from this class; Crudderconfig validation methods don't need to call this, because the accumulation of errors messages is automatic</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			validation_add_error
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$method_name</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_content</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$method_name</span><span class="var-description">: full name of the callback method in Crudderconfig class</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$variable_content</span><span class="var-description">: text that will replace the substring '##' in the message definition for the error; pass the key of Crudderconfig.validation_error_messages</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodvalidation_errors_build_snippet" id="validation_errors_build_snippet"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validation_errors_build_snippet</span> (line <span class="line-number">2310</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the validation errors in the form of a HTML snippet ready for echoing in the current view redisplay</p>
+<p class="description"><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the generated HTML snippet</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			validation_errors_build_snippet
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodvalidation_set_error_delimiters" id="validation_set_error_delimiters"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">validation_set_error_delimiters</span> (line <span class="line-number">2289</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the HTML delimiters for accumulative error messages</p>
+<p class="description"><p>The HTML delimiters will work with both types of error messages (CI and Crudder), so don't call the CI-specific method that also does this</p><p>(CRUD generator method)</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			validation_set_error_delimiters
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$prev</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$next</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$prev</span><span class="var-description">: HTML snippet for prefixing the error</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$next</span><span class="var-description">: HTML snippet for postfixing the error</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 04 Apr 2014 14:27:23 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

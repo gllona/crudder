@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Crudderconfig</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Crudderconfig</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder configuration core class</p>
+<p class="description"><p>This file should reside into the &quot;application/core&quot; directory</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Gorka G LLona &lt;<a href="mailto:gorka@desarrolladores.logicos.org">gorka@desarrolladores.logicos.org</a>&gt; &lt;gllona@gmail.com&gt;</li>
+				<li><span class="field">version:</span> Version 1.0.0 beta 1</li>
+				<li><span class="field">copyright:</span> Copyright (c) 2014, Gorka G LLona</li>
+				<li><span class="field">see:</span> main Crudder class (configuration and limitations)</li>
+				<li><span class="field">link:</span> <a href="http://librerias.logicas.org/crudder">http://librerias.logicas.org/crudder</a></li>
+				<li><span class="field">since:</span> Version 1.0.0 beta 1</li>
+				<li><span class="field">license:</span> GNU</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Crudderconfig.php.html">/Crudderconfig.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#ABORT_METHOD" title="details" class="const-name">ABORT_METHOD</a> = 					<span class="var-type"> 'crudder/abort'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#CI_BASED_MAIN_APPLICATION" title="details" class="const-name">CI_BASED_MAIN_APPLICATION</a> = 					<span class="var-type"> TRUE</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#DEFAULT_PAGES_SET" title="details" class="const-name">DEFAULT_PAGES_SET</a> = 					<span class="var-type"> 'BOOTSTRAPPED'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#DEFAULT_USER_ROLE" title="details" class="const-name">DEFAULT_USER_ROLE</a> = 					<span class="var-type"> 'superadmin'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#GOAWAY_METHOD" title="details" class="const-name">GOAWAY_METHOD</a> = 					<span class="var-type"> 'crudder/abort'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LANGUAGE_CODE" title="details" class="const-name">LANGUAGE_CODE</a> = 					<span class="var-type"> 'ES'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LOG_ERROR" title="details" class="const-name">LOG_ERROR</a> = 					<span class="var-type"> 4</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LOG_EXCEPTION" title="details" class="const-name">LOG_EXCEPTION</a> = 					<span class="var-type"> 3</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LOG_LEVEL" title="details" class="const-name">LOG_LEVEL</a> = 					<span class="var-type"> 1</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LOG_NOTICE" title="details" class="const-name">LOG_NOTICE</a> = 					<span class="var-type"> 1</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#LOG_WARNING" title="details" class="const-name">LOG_WARNING</a> = 					<span class="var-type"> 2</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#NULL_VALUE" title="details" class="const-name">NULL_VALUE</a> = 					<span class="var-type"> '(NULL)'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#PAGER_LENGTH" title="details" class="const-name">PAGER_LENGTH</a> = 					<span class="var-type"> 50</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#SHOW_METATABLES" title="details" class="const-name">SHOW_METATABLES</a> = 					<span class="var-type"> true</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#STANDALONE" title="details" class="const-name">STANDALONE</a> = 					<span class="var-type"> TRUE</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+												<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$codeigniter_languages_folders" title="details" class="var-name">$codeigniter_languages_folders</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$default_type_values" title="details" class="var-name">$default_type_values</a>
+				</div>
+																								<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$strings" title="details" class="var-name">$strings</a>
+				</div>
+																																												<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$snippets" title="details" class="var-name">$snippets</a>
+				</div>
+																								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$validation_error_messages" title="details" class="var-name">$validation_error_messages</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+												<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#check_access_outside_codeigniter" title="details" class="method-name">check_access_outside_codeigniter</a>
+										()
+									</div>
+																																																								<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#get_default_type_value" title="details" class="method-name">get_default_type_value</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>)
+									</div>
+																								<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#get_string" title="details" class="method-name">get_string</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_string</span> = <span class="var-default">false</span>])
+									</div>
+																								<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#init" title="details" class="method-name">init</a>
+										()
+									</div>
+																								<div class="method-definition">
+					static 						<span class="method-result">void</span>
+										<a href="#log" title="details" class="method-name">log</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$level</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$operation</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$description</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#texter" title="details" class="method-name">texter</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+									</div>
+								
+																				<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#crudder_format_location_check" title="details" class="method-name">crudder_format_location_check</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$code</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#crudder_full_location_check" title="details" class="method-name">crudder_full_location_check</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field_with_base_value</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#crudder_is_unique" title="details" class="method-name">crudder_is_unique</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$field_validation_specs</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#database_datetime" title="details" class="method-name">database_datetime</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$locale_datetime</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_snippet" title="details" class="method-name">get_snippet</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>])
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_validation_error" title="details" class="method-name">get_validation_error</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_string</span> = <span class="var-default">false</span>])
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#locale_datetime" title="details" class="method-name">locale_datetime</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$database_datetime</span>)
+									</div>
+																								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$codeigniter_languages_folders" id="$codeigniter_languages_folders"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$codeigniter_languages_folders</span>
+			 = <span class="var-default">array (<br />        'ES' =&gt; 'spanish',<br />        'EN' =&gt; 'english',<br />    )</span>			(line <span class="line-number">169</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Define folders that codeigniter uses for localization, based in the language code</p>
+<p class="description"><p>Put here only the needed localization folders</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$default_type_values" id="$default_type_values"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$default_type_values</span>
+			 = <span class="var-default">array ()</span>			(line <span class="line-number">42</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$strings" id="$strings"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$strings</span>
+			 = <span class="var-default">array ()</span>			(line <span class="line-number">39</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$snippets" id="$snippets"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$snippets</span>
+			 = <span class="var-default">array ()</span>			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$validation_error_messages" id="$validation_error_messages"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$validation_error_messages</span>
+			 = <span class="var-default">array ()</span>			(line <span class="line-number">41</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																			<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodcheck_access_outside_codeigniter" id="check_access_outside_codeigniter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method check_access_outside_codeigniter</span> (line <span class="line-number">608</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Checks access to the Crudder as defined by the non-codeigniter-based main application</p>
+<p class="description"><p>(security method)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> one of these values: &quot;none&quot;, &quot;admin&quot;, &quot;superadmin&quot;</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			check_access_outside_codeigniter
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_default_type_value" id="get_default_type_value"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method get_default_type_value</span> (line <span class="line-number">754</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a display-intended string, applying localization settings</p>
+<p class="description"><p>(default values settings and localized elements access)</p><p>Should be called only from the views (use static Crudderconfig::get_string() form of calling)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> default value for the type</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_default_type_value
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: database field type, as defined in the class initializer</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_string" id="get_string"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method get_string</span> (line <span class="line-number">774</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a display-intended string, applying localization settings</p>
+<p class="description"><p>(default values settiongs and localized elements access)</p><p>Should be called only from the views (use static Crudderconfig::get_string() form of calling)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the localized string value</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_string
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_string</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key</span><span class="var-description">: key for the string; all are defined in the class initializer</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$escape_html</span><span class="var-description">: wheter to escape the string for avoiding HTML special char, or not</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$variable_string</span><span class="var-description">: if set, the substring '##' in the string value will be replaced with this argument</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodinit" id="init"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method init</span> (line <span class="line-number">184</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class static initializer</p>
+<p class="description"><p>Includes localization info</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			init
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodlog" id="log"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method log</span> (line <span class="line-number">627</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register each relevant Crudder operation into a whole-application log database (optional feature)</p>
+<p class="description"><p>(security method)</p><p>Available log levels are: LOG_NOTICE, LOG_WARNING, LOG_EXCEPTION and LOG_ERROR</p><p>Granularity of logging is defined with the LOG_LEVEL constant, that is set at the top of this file</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">void</span>
+		<span class="method-name">
+			log
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$level</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$operation</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$description</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$level</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$operation</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$description</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtexter" id="texter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method texter</span> (line <span class="line-number">580</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Preprocessor for all the display values that will be shown; intented for visual format changes</p>
+<p class="description"><p>(look and feel settings)</p><p>Should be called only from the views</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the processed string</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			texter
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$text</span><span class="var-description">: value to be preprocessed</span>			</li>
+				</ul>
+		
+			
+	</div>
+
+<a name="methodcrudder_format_location_check" id="crudder_format_location_check"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_format_location_check</span> (line <span class="line-number">669</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder callback that checks the location code format in form fields (estado, municipio, parroquia)</p>
+<p class="description"><p>(fields validation specification - application logic implementation)</p><p>There is no need to add the validation error in each callback method; this is done automatically</p><p>This is for: Venezuelan geographical location entities: Estado, Municipio, Parroquia</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			crudder_format_location_check
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$code</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$code</span><span class="var-description">: location code for checking (estado, municipio, parroquia); sent directly from the Crudder class</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcrudder_full_location_check" id="crudder_full_location_check"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_full_location_check</span> (line <span class="line-number">700</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder callback that checks the coherence of location codes (estado, municipio, parroquia)</p>
+<p class="description"><p>(fields validation specification - application logic implementation)</p><p>There is no need to add the validation error in each callback method; this is done automatically</p><p>In this case, because validation_specs has only one value, that is passed directly and not as an array</p><p>This is for: Venezuelan geographical location entities: Estado, Municipio, Parroquia</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			crudder_full_location_check
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field_with_base_value</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field_with_base_value</span><span class="var-description">: field_with_base_value; validation rule in fields metatable is like &quot;crudder_full_location_check[code_estado]&quot;; this will check the field against the value of code_estado field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span><span class="var-description">: value to be checked (assigned by the crudder logic)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcrudder_is_unique" id="crudder_is_unique"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">crudder_is_unique</span> (line <span class="line-number">730</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Crudder callback field checking for database inserts and updates (more powerful than CI is_unique)</p>
+<p class="description"><p>(fields validation specification - application logic implementation)</p><p>There is no need to add the validation error in each callback method; this is done automatically</p><p>Checks if 'value' is already used in 'field_name' of 'table_name'; this for inserts and also for updates that change the value</p><p>If 'action' is 'update' and no 'orig_value' is passed, this method can't work properly and will return true</p><p>This is for: all applications based on Crudder</p><p>Important: don't change the code of this method - it's optimized in the main Crudder class</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			crudder_is_unique
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$field_validation_specs</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$id_record</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$field_validation_specs</span><span class="var-description">: validation rule in fields metatable is like &quot;crudder_is_unique[cat_municipios,code,action]&quot;; this will check the &quot;value&quot; for being unique in table &quot;cat_municipios&quot; for the specified &quot;action&quot; (that is assigned by the main Crudder class and can be an insert or an update, with some internals tweaks)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span><span class="var-description">: value to be checked (assigned by the Crudder logic)</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$id_record</span><span class="var-description">: id of the record being checked in the table named as &quot;cat_municipios&quot; in the above example (first argument; assigned by the Crudder logic)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddatabase_datetime" id="database_datetime"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">database_datetime</span> (line <span class="line-number">540</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Date/Datetime manipulation method. Converts a localized date/datetime to the standard database date/datetime format</p>
+<p class="description"><p>(look and feel settings)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the database-conform date/datetime</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			database_datetime
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$locale_datetime</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$locale_datetime</span><span class="var-description">: date/datetime to be preprocessed</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">329</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class instance constructor</p>
+<p class="description"><p>Includes localization info</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_snippet" id="get_snippet"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_snippet</span> (line <span class="line-number">801</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a display-intended snippet, applying localization settings</p>
+<p class="description"><p>(default values settiongs and localized elements access)</p><p>Intended for being called from the Crudder class (use $this-&gt;configurator-&gt;get_string() form of calling)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the localized string value</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_snippet
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: STATIC or EDITABLE</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key</span><span class="var-description">: key for the string; all are defined in the instance constructor</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$escape_html</span><span class="var-description">: wheter to escape the string for avoiding HTML special chars (entities), or not</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_validation_error" id="get_validation_error"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_validation_error</span> (line <span class="line-number">830</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get a display-intended validation error messsage, applying localization settings</p>
+<p class="description"><p>(default values settiongs and localized elements access)</p><p>There is no need for calling this method, it works automatically</p><p>Only be assure that the key definition in the $validation_errors_message array coincides with the name of the validation method</p><p>This applies only for 'crudder_*' validation methods; not to 'callback_*' native-style validation methods (that should not be used)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the localized error description</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_validation_error
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$escape_html</span> = <span class="var-default">true</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$variable_string</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key</span><span class="var-description">: key for the validation error; all are defined in the instance constructor</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$escape_html</span><span class="var-description">: wheter to escape the string for avoiding HTML special char, or not</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$variable_string</span><span class="var-description">: if set, the substring '##' in the validation error string will be replaced with this argument</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodlocale_datetime" id="locale_datetime"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">locale_datetime</span> (line <span class="line-number">511</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Date/Datetime manipulation method. Converts a database-formatted date/datetime to a localized date/datetime</p>
+<p class="description"><p>(look and feel settings)</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the locale-conform date/datetime</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			locale_datetime
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$database_datetime</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$database_datetime</span><span class="var-description">: date/datetime to be preprocessed</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+														| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constABORT_METHOD" id="ABORT_METHOD"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">ABORT_METHOD</span>
+			 = <span class="const-default"> 'crudder/abort'</span>
+			(line <span class="line-number">101</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">CI method for aborting user session for from the main system (and the Crudder); this will be called from Crudder in case of a URI injection attempt</p>
+<p class="description"><p>Sample: ABORT_METHOD = 'mainapp/abortfrom_crudder';</p></p>
+	
+	
+</div>
+<a name="constCI_BASED_MAIN_APPLICATION" id="CI_BASED_MAIN_APPLICATION"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">CI_BASED_MAIN_APPLICATION</span>
+			 = <span class="const-default"> TRUE</span>
+			(line <span class="line-number">81</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">When your main application is developed usign other framework than CodeIgniter, session variables are managed in a different way.</p>
+<p class="description"><p>If this attribute is FALSE, you have to implement your own logic for the &quot;&quot; method in this class.  This method should return &quot;admin&quot; for administrator role; &quot;superadmin&quot; for superadministrator role; and any other value for no access allowed</p></p>
+	
+	
+</div>
+<a name="constDEFAULT_PAGES_SET" id="DEFAULT_PAGES_SET"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">DEFAULT_PAGES_SET</span>
+			 = <span class="const-default"> 'BOOTSTRAPPED'</span>
+			(line <span class="line-number">130</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Default page set to use for look and feel</p>
+<p class="description"><p>Current values here can be &quot;BOOTSTRAPPED&quot; and &quot;RAW&quot;</p><p>Currently the RAW views don't work with the EN (english) language because all the texts inside are hardwired</p></p>
+	
+	
+</div>
+<a name="constDEFAULT_USER_ROLE" id="DEFAULT_USER_ROLE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">DEFAULT_USER_ROLE</span>
+			 = <span class="const-default"> 'superadmin'</span>
+			(line <span class="line-number">110</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Capabilities of the user that is using the Crudder</p>
+<p class="description"><p>This role is overwritted by the persistent session variable &quot;crudder_user_role&quot;; this is useful when, in non-standadalone mode, some users have full edit permissions and others not</p></p>
+	
+	
+</div>
+<a name="constGOAWAY_METHOD" id="GOAWAY_METHOD"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">GOAWAY_METHOD</span>
+			 = <span class="const-default"> 'crudder/abort'</span>
+			(line <span class="line-number">92</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">CI method for reentering from the Crudder to the main system</p>
+<p class="description"><p>The goaway method can not be &quot;crudded/goaway&quot; in order to disallow recursive calling</p><p>Sample: GOAWAY_METHOD = 'mainapp/comefrom_crudder';</p></p>
+	
+	
+</div>
+<a name="constLANGUAGE_CODE" id="LANGUAGE_CODE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LANGUAGE_CODE</span>
+			 = <span class="const-default"> 'ES'</span>
+			(line <span class="line-number">139</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Language to be used for displaying text strings in the Crudder views; check also for the existence of the proper subfolder in the config/language CI directory tree</p>
+<p class="description"><p>Currently implemented: ES, EN</p></p>
+	
+	
+</div>
+<a name="constLOG_ERROR" id="LOG_ERROR"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LOG_ERROR</span>
+			 = <span class="const-default"> 4</span>
+			(line <span class="line-number">47</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constLOG_EXCEPTION" id="LOG_EXCEPTION"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LOG_EXCEPTION</span>
+			 = <span class="const-default"> 3</span>
+			(line <span class="line-number">46</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constLOG_LEVEL" id="LOG_LEVEL"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LOG_LEVEL</span>
+			 = <span class="const-default"> 1</span>
+			(line <span class="line-number">60</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Defines the minimal threshold for registering events in the logging mechanism</p>
+	
+	
+</div>
+<a name="constLOG_NOTICE" id="LOG_NOTICE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LOG_NOTICE</span>
+			 = <span class="const-default"> 1</span>
+			(line <span class="line-number">44</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constLOG_WARNING" id="LOG_WARNING"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LOG_WARNING</span>
+			 = <span class="const-default"> 2</span>
+			(line <span class="line-number">45</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constNULL_VALUE" id="NULL_VALUE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">NULL_VALUE</span>
+			 = <span class="const-default"> '(NULL)'</span>
+			(line <span class="line-number">146</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Text value for NULL value in database; shouldn't be used as any other value in database</p>
+	
+	
+</div>
+<a name="constPAGER_LENGTH" id="PAGER_LENGTH"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">PAGER_LENGTH</span>
+			 = <span class="const-default"> 50</span>
+			(line <span class="line-number">153</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Length of each page for table pagination</p>
+	
+	
+</div>
+<a name="constSHOW_METATABLES" id="SHOW_METATABLES"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">SHOW_METATABLES</span>
+			 = <span class="const-default"> true</span>
+			(line <span class="line-number">119</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">True if the tables list should show the crudder metatables for normal administrative user ('admin' role)</p>
+<p class="description"><p>This role is overwritted by the persistent session variable &quot;crudder_user_role&quot;; this is useful when, in non-standadalone mode, some users have full edit permissions and others not</p></p>
+	
+	
+</div>
+<a name="constSTANDALONE" id="STANDALONE"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">STANDALONE</span>
+			 = <span class="const-default"> TRUE</span>
+			(line <span class="line-number">71</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Defines if Crudder will function as a standalone application or as a module of an external application</p>
+<p class="description"><p>When true, the crudder is configured for running outside any app (standalone mode)</p><p>Check that the proper default controller is set in CI routes.php; when standalone, that should be &quot;crudder&quot;</p></p>
+	
+	
+</div>
+						
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 04 Apr 2014 14:27:24 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

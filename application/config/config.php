@@ -14,7 +14,9 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://cruddertest/';
+$config['base_url'] = $_SERVER["REMOTE_ADDR"] == "127.0.0.1" ?
+    'http://crudder.test/' :
+    'http://crudder.logicos.org/';
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +72,8 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-//$config['language']	= 'english';
-$config['language']	= 'spanish';
+$config['language']	= 'english';
+//$config['language']	= 'spanish';
 
 /*
 |--------------------------------------------------------------------------
@@ -343,7 +345,7 @@ $config['time_reference'] = 'local';
 | in your view files.  Options are TRUE or FALSE (boolean)
 |
 */
-$config['rewrite_short_tags'] = FALSE;
+$config['rewrite_short_tags'] = TRUE;
 
 
 /*

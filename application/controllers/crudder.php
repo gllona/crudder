@@ -73,7 +73,7 @@ require_once(APPPATH . 'core/' . 'Crudderconfig.php');
  * 
  * 7. if you want to reset the sample database included with this distribution, look for the proper SQL scripts under the "_database" directory
  * 
- * 8. this distribution includes a complete CodeIgniter installation in order to work out-of-the-box; however, the php files that compose the Crudder (excluding the sample Mainapp application) are (inside the "application/" directory): controllers/crudder.php, core/Crudderconfig.php, views/bootstrapped/*, views/raw/*, languages/spanish/form_validation_lang.php (the rest of files inside languages/spanish are a copy of the languages/english directory)
+ * 8. this distribution includes a complete CodeIgniter installation in order to work out-of-the-box; however, the php files that compose the Crudder (excluding the sample Mainapp application) are (inside the "application/" directory): controllers/Crudder.php, core/Crudderconfig.php, views/bootstrapped/*, views/raw/*, languages/spanish/form_validation_lang.php (the rest of files inside languages/spanish are a copy of the languages/english directory)
  * 
  * 9. If you plan use Crudder with an external, no CI-based application, look inside the Crudderconfig class for the proper configuration
  * 

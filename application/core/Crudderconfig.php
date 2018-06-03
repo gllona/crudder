@@ -68,7 +68,7 @@ class Crudderconfig
      * 
      * Check that the proper default controller is set in CI routes.php; when standalone, that should be "crudder"
      */
-    const STANDALONE = TRUE;   // TRUE FALSE
+    const STANDALONE = FALSE;   // TRUE FALSE
 
     
     
@@ -89,7 +89,7 @@ class Crudderconfig
      * 
      * Sample: GOAWAY_METHOD = 'mainapp/comefrom_crudder';
      */
-    const GOAWAY_METHOD = 'crudder/abort';   
+    const GOAWAY_METHOD = 'example/come_from_crudder';   
     
     
     
@@ -136,7 +136,7 @@ class Crudderconfig
      * 
      * Currently implemented: ES, EN
      */
-    const LANGUAGE_CODE = 'ES';   // EN ES
+    const LANGUAGE_CODE = 'EN';   // EN ES
     
     
     
@@ -239,7 +239,7 @@ class Crudderconfig
             'delete_label'                             => 'Eliminar',
             'pager_page_label'                         => 'Página',
             'pager_of_label'                           => 'de',
-            'credits_text_and_links'                   => 'Desarrollado con <a href="http://codeigniter.com" target="_blank">CodeIgniter</a> y <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Iconos de <a href="http://glyphicons.com/" target="_blank">GlyphIcons</a>. Crudder por <a href="http://desarrolladores.logicos.org/gorka/" target="_blank">Gorka G LLona</a>.',
+            'credits_text_and_links'                   => 'Desarrollado con <a href="http://codeigniter.com" target="_blank">CodeIgniter</a> y <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Iconos de <a href="http://glyphicons.com/" target="_blank">GlyphIcons</a>. Crudder por <a href="http://desarrolladores.logicos.org/gorka/" target="_blank">Gorka Llona</a>.',
             // used in the crudder main code
             'record_updated'                           => 'El registro fue actualizado',
             'record_inserted'                          => 'El registro fue insertado',
@@ -298,7 +298,7 @@ class Crudderconfig
             'delete_label'                             => 'Delete',
             'pager_page_label'                         => 'Page',
             'pager_of_label'                           => 'of',
-            'credits_text_and_links'                   => 'Developed with <a href="http://codeigniter.com" target="_blank">CodeIgniter</a> and <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Icons from <a href="http://glyphicons.com/" target="_blank">GlyphIcons</a>. Crudder by <a href="http://desarrolladores.logicos.org/gorka/" target="_blank">Gorka G LLona</a>.',
+            'credits_text_and_links'                   => 'Developed with <a href="http://codeigniter.com" target="_blank">CodeIgniter</a> and <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>. Icons from <a href="http://glyphicons.com/" target="_blank">GlyphIcons</a>. Crudder by <a href="http://desarrolladores.logicos.org/gorka/" target="_blank">Gorka Llona</a>.',
             // used in the crudder main code
             'record_updated'                           => 'The record was updated',
             'record_inserted'                          => 'The record was inserted',
@@ -577,6 +577,9 @@ class Crudderconfig
      * @param	string  value to be preprocessed
      * @return	string  the processed string
      */
+    //
+    // The following, commented code soes NOT work with PHP < 5.3 (lambda functions are not supported)
+    /*
     public static function texter ($text)
     {
         $text = preg_replace_callback(
@@ -588,7 +591,26 @@ class Crudderconfig
         );        
         return $text;
     }
-    
+    */
+    //
+    // The following code is for converting PHP >= 5.3 code for lambda functions, passed as arguments to other functions
+    // Note that encapsulation is maintained because the new named, pseudo-lambda function is defined within the main function
+    // 
+    public static function texter ($text)
+    {
+		//$texter_callback = create_function (
+		//    '$matches',
+		//    'return $matches[0] . "<i>" . $matches[1] . "</i>" . $matches[2];'
+		//);
+        $text = preg_replace_callback(
+            '/(\>?)(\(NULL\))(\<?)/',
+            //$texter_callback,
+            function($matches) { return $matches[0] . "<i>" . $matches[1] . "</i>" . $matches[2]; },
+            $text
+        );        
+        return $text;
+    }
+
 
     
     //==================================================================================

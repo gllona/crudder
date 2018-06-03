@@ -1,0 +1,6 @@
+* Validar accesos hack url a metodos de update insert y delete (insert secondary ok)
+* Control de datetime
+* Exit points distintos para diferentes usuarios
+* Sets de diferentes tablas para diferentes usuarios
+* Licencia GPL no LGPL
+* Empaquetar con README.*

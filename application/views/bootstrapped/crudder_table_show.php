@@ -27,7 +27,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal"><?= Crudderconfig::get_string('no_label') ?></button>
-            <button type="button" onClick="location.href='<?= BASE_URL_CI ?>crudder/record_delete/<?= $id_table ?>/'+id_record" name="2n" id="2" class="btn btn-danger"><?= Crudderconfig::get_string('yes_label') ?></button>
+            <button type="button" onClick="location.href='/crudder/record_delete/<?= $id_table ?>/'+id_record" name="2n" id="2" class="btn btn-danger"><?= Crudderconfig::get_string('yes_label') ?></button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

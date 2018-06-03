@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "crudder";   // crudder mainapp
+$route['default_controller'] = "example";   // or: mainapp
 $route['404_override'] = '';
 
 
